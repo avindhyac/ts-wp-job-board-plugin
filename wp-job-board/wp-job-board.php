@@ -16,3 +16,4 @@ require_once WJB_PATH . 'includes/post-type.php';
 require_once WJB_PATH . 'includes/meta-boxes.php';
 require_once WJB_PATH . 'includes/shortcode.php';
 require_once WJB_PATH . 'includes/enqueue.php';
+require_once WJB_PATH . 'includes/admin-dashboard.php';
