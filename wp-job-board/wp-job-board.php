@@ -17,3 +17,15 @@ require_once WJB_PATH . 'includes/meta-boxes.php';
 require_once WJB_PATH . 'includes/shortcode.php';
 require_once WJB_PATH . 'includes/enqueue.php';
 require_once WJB_PATH . 'includes/admin-dashboard.php';
+
+// Client portal — must load before template_redirect fires
+require_once WJB_PATH . 'includes/portal-settings.php';
+require_once WJB_PATH . 'includes/portal-auth.php';
+require_once WJB_PATH . 'includes/portal-render.php';
+require_once WJB_PATH . 'includes/portal-ajax.php';
+
+// Flush rewrite rules on activation so the portal URL works immediately
+register_activation_hook( __FILE__, function () {
+    wjb_portal_register_rewrite();
+    flush_rewrite_rules();
+} );
