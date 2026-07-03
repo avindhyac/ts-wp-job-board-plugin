@@ -2,10 +2,10 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 function wjb_enqueue_assets() {
-    // Google Fonts — Archivo (heavy grotesque w/ italics) for the brand display type.
+    // Google Fonts — Manrope (matches site-wide brand type).
     wp_enqueue_style(
         'wjb-fonts',
-        'https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap',
+        'https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap',
         array(),
         null
     );
@@ -14,14 +14,14 @@ function wjb_enqueue_assets() {
         'wjb-styles',
         WJB_URL . 'assets/job-board.css',
         array( 'wjb-fonts' ),
-        '1.1.0'
+        '1.2.0'
     );
 
     wp_enqueue_script(
         'wjb-scripts',
         WJB_URL . 'assets/job-board.js',
         array(),
-        '1.1.0',
+        '1.2.0',
         true
     );
 }
