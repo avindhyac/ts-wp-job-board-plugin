@@ -1,0 +1,444 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap');
+
+/* =========================================================
+   TALENT STUDIO — RESULTS / OUTCOMES SECTION
+   Fixed desktop + mobile clipping / heading width / no disappear
+========================================================= */
+
+.ts-results-section,
+.ts-results-section * {
+  box-sizing: border-box;
+}
+
+.ts-results-section {
+  --ts-purple: #8B52CE;
+  --ts-purple-light: #9E76DD;
+  --ts-purple-main: #7E57C2;
+  --ts-black: #111111;
+  --ts-white: #FFFFFF;
+  --ts-grey: #D7D7D7;
+  --ts-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ts-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.88) 36%, rgba(238,238,238,0.12) 70%),
+    linear-gradient(115deg, #D7D7D7 0%, #FFFFFF 48%, #D7D7D7 100%);
+
+  color: var(--ts-black);
+  font-family: var(--ts-font);
+  padding: clamp(88px, 7vw, 118px) 0 clamp(84px, 7vw, 116px);
+  /* padding: clamp(88px, 7vw, 118px) clamp(22px, 3vw, 56px) clamp(84px, 7vw, 116px); */
+}
+
+.elementor-widget-html:has(.ts-results-section),
+.elementor-widget-html:has(.ts-results-section) .elementor-widget-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.ts-results-section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    rgba(158,118,221,0),
+    rgba(158,118,221,0.86),
+    rgba(139,82,206,0.86),
+    rgba(158,118,221,0)
+  );
+}
+
+.ts-results-inner {
+  width: min(1360px, calc(100vw - clamp(44px, 6vw, 112px)));
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(54px, 6vw, 104px);
+  align-items: center;
+
+  position: relative;
+  z-index: 2;
+}
+
+.ts-results-left,
+.ts-results-right {
+  min-width: 0;
+  overflow: visible;
+}
+
+.ts-results-title {
+  margin: 0;
+  max-width: 680px;
+  overflow: visible;
+
+  font-family: var(--ts-font);
+  font-size: clamp(48px, 4.4vw, 78px);
+  line-height: 1.09;
+  letter-spacing: -0.066em;
+  font-weight: 800;
+  color: var(--ts-black);
+
+  padding-bottom: 0.14em;
+}
+
+.ts-results-title span {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+
+  padding-right: 0.08em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.12em;
+
+  background: linear-gradient(90deg, #9E76DD 0%, #8B52CE 50%, #9E76DD 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.ts-results-image-wrap {
+  margin-top: clamp(46px, 4.7vw, 70px);
+  width: min(500px, 100%);
+
+  border-radius: 28px;
+  overflow: hidden;
+  background: #111111;
+  box-shadow: 0 26px 44px rgba(0,0,0,0.12);
+}
+
+.ts-results-image-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ts-results-right {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 4vw, 58px);
+  padding-top: 2px;
+}
+
+.ts-result-stat {
+  max-width: 680px;
+  min-width: 0;
+}
+
+.ts-result-number {
+  display: block;
+  margin: 0 0 14px;
+
+  font-family: var(--ts-font);
+  font-size: clamp(70px, 5.2vw, 98px);
+  line-height: 0.9;
+  letter-spacing: -0.064em;
+  font-weight: 800;
+
+  padding-right: 0.05em;
+  padding-bottom: 0.05em;
+
+  background: linear-gradient(90deg, #9E76DD 0%, #8B52CE 52%, #9E76DD 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.ts-result-copy {
+  margin: 0;
+  max-width: 640px;
+
+  font-family: var(--ts-font);
+  font-size: clamp(20px, 1.35vw, 25px);
+  line-height: 1.18;
+  letter-spacing: -0.036em;
+  font-weight: 500;
+  color: rgba(17,17,17,0.96);
+  overflow-wrap: normal;
+}
+
+.ts-results-action {
+  margin-top: 0;
+}
+
+.ts-results-btn {
+  min-width: 310px;
+  min-height: 56px;
+  padding: 0 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1.3px solid rgba(139,82,206,0.68);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.13);
+
+  color: var(--ts-black);
+  text-decoration: none !important;
+  font-family: var(--ts-font);
+  font-size: clamp(20px, 1.25vw, 25px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.ts-results-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(139,82,206,0.08);
+  border-color: var(--ts-purple-main);
+  box-shadow: 0 18px 42px rgba(139,82,206,0.13);
+  color: var(--ts-black);
+}
+
+/* Laptop / editor-safe */
+@media (max-width: 1280px) {
+  .ts-results-inner {
+    width: min(1160px, calc(100vw - 70px));
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 54px;
+  }
+
+  .ts-results-title {
+    font-size: clamp(44px, 4.25vw, 66px);
+    line-height: 1.1;
+    letter-spacing: -0.062em;
+  }
+
+  .ts-results-image-wrap {
+    width: min(455px, 100%);
+  }
+
+  .ts-result-number {
+    font-size: clamp(66px, 5vw, 88px);
+  }
+
+  .ts-result-copy {
+    font-size: clamp(19px, 1.35vw, 23px);
+    max-width: 600px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1120px) {
+  .ts-results-section {
+    padding: 72px 0 78px;
+  }
+
+  .ts-results-inner {
+    width: min(100% - 48px, 920px);
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .ts-results-title {
+    max-width: 780px;
+    font-size: clamp(46px, 6.4vw, 68px);
+  }
+
+  .ts-results-image-wrap {
+    margin-top: 38px;
+    width: min(520px, 100%);
+  }
+
+  .ts-results-right {
+    gap: 34px;
+    padding-top: 0;
+  }
+
+  .ts-result-stat {
+    max-width: 760px;
+  }
+
+  .ts-result-copy {
+    max-width: 720px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+  .ts-results-section {
+    padding: 54px 0 60px;
+    overflow-x: hidden;
+  }
+
+  .ts-results-inner {
+    width: min(100% - 28px, 520px);
+    gap: 36px;
+  }
+
+  .ts-results-title {
+    max-width: 100%;
+    font-size: clamp(34px, 9.2vw, 46px);
+    line-height: 1.13;
+    letter-spacing: -0.052em;
+    padding-bottom: 0.2em;
+  }
+
+  .ts-results-title span {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0.96em;
+    padding-right: 0.12em;
+    padding-bottom: 0.18em;
+    margin-bottom: -0.14em;
+  }
+
+  .ts-results-image-wrap {
+    margin-top: 24px;
+    width: 100%;
+    border-radius: 22px;
+  }
+
+  .ts-results-right {
+    gap: 0;
+  }
+
+  .ts-result-stat {
+    padding: 22px 0 24px;
+    border-bottom: 1px solid rgba(17,17,17,0.08);
+  }
+
+  .ts-result-stat:last-of-type {
+    border-bottom: 0;
+  }
+
+  .ts-result-number {
+    font-size: clamp(58px, 18vw, 78px);
+    line-height: 0.95;
+    margin-bottom: 10px;
+    letter-spacing: -0.052em;
+  }
+
+  .ts-result-copy {
+    font-size: 17px;
+    line-height: 1.28;
+    letter-spacing: -0.028em;
+    max-width: 100%;
+  }
+
+  .ts-results-action {
+    margin-top: 12px;
+  }
+
+  .ts-results-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    border-radius: 15px;
+    font-size: 18px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 390px) {
+  .ts-results-inner {
+    width: min(100% - 24px, 360px);
+  }
+
+  .ts-results-title {
+    font-size: clamp(31px, 8.8vw, 36px);
+    letter-spacing: -0.046em;
+  }
+
+  .ts-results-title span {
+    font-size: 0.94em;
+  }
+
+  .ts-result-copy {
+    font-size: 16px;
+  }
+
+  .ts-results-btn {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ts-results-btn {
+    transition: none !important;
+  }
+
+  .ts-results-btn:hover {
+    transform: none;
+  }
+}
+</style>
+
+<section class="ts-results-section" id="results" aria-labelledby="ts-results-title">
+  <div class="ts-results-inner">
+
+    <div class="ts-results-left">
+      <h2 class="ts-results-title" id="ts-results-title">
+        Smarter Hiring.<br>
+        <span>Stronger Teams.</span>
+      </h2>
+
+      <div class="ts-results-image-wrap">
+        <img
+          src="https://talentstudio.dreamhosters.com/wp-content/uploads/2026/06/Image-2.webp"
+          alt="Overhead view of a business meeting"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+    </div>
+
+    <div class="ts-results-right" aria-label="Talent Studio results">
+
+      <div class="ts-result-stat">
+        <strong class="ts-result-number" data-target="40">40%</strong>
+        <p class="ts-result-copy">
+          Reduced turnover for a UK accounting firm through skills first finance recruitment.
+        </p>
+      </div>
+
+      <div class="ts-result-stat">
+        <strong class="ts-result-number" data-target="45">45%</strong>
+        <p class="ts-result-copy">
+          Cost saving after building a 24/7 remote support team in three weeks.
+        </p>
+      </div>
+
+      <div class="ts-result-stat">
+        <strong class="ts-result-number" data-target="37">37%</strong>
+        <p class="ts-result-copy">
+          Rise in employee satisfaction for a Sri Lankan manufacturing group through learning, development and wellbeing programs.
+        </p>
+      </div>
+
+      <div class="ts-results-action">
+        <a
+          class="ts-results-btn ts-results-link"
+          href="https://talentstudio.dreamhosters.com/case-studies-results/"
+        >
+          Read the Full Stories
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>

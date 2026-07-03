@@ -18,13 +18,33 @@
     --wjb-muted-dim:     #6b6b88;
     --wjb-radius:        16px;
 
-    max-width: 1360px;
-    margin: 0 auto;
-    padding: clamp(88px, 7vw, 118px) clamp(22px, 3vw, 56px) clamp(84px, 7vw, 116px);
+    /* Break out of Elementor's constrained container so horizontal
+       margins are measured from the true viewport edge, not the column edge. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    position: relative;
+    overflow-x: clip;
+    overflow-y: visible;
+
+    padding: clamp(88px, 7vw, 118px) 0 clamp(84px, 7vw, 116px);
     box-sizing: border-box;
     color: var(--wjb-text);
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Suppress any Elementor widget bottom margin so sections butt up cleanly. */
+.elementor-widget-html:has(.wjb-wrap),
+.elementor-widget-html:has(.wjb-wrap) .elementor-widget-container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.wjb-inner {
+    width: min(1360px, calc(100vw - clamp(44px, 6vw, 112px)));
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .wjb-wrap *,
@@ -586,11 +606,13 @@
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1120px) {
-    .wjb-wrap { padding: 72px clamp(18px, 3vw, 40px) 78px; }
+    .wjb-wrap  { padding: 72px 0 78px; }
+    .wjb-inner { width: min(calc(100vw - 48px), 920px); }
 }
 
 @media (max-width: 680px) {
-    .wjb-wrap { padding: 54px 14px 60px; }
+    .wjb-wrap  { padding: 54px 0 60px; overflow-x: hidden; }
+    .wjb-inner { width: calc(100vw - 28px); }
     .wjb-grid { grid-template-columns: 1fr; }
     .wjb-refine { gap: 8px; }
     .wjb-filter { flex: 1 1 auto; }
@@ -599,5 +621,6 @@
 }
 
 @media (max-width: 390px) {
-    .wjb-wrap { padding: 48px 12px 56px; }
+    .wjb-wrap  { padding: 48px 0 56px; }
+    .wjb-inner { width: calc(100vw - 24px); }
 }

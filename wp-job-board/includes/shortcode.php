@@ -147,6 +147,7 @@ function wjb_render_shortcode( $atts ) {
     ob_start();
     ?>
     <div class="wjb-wrap">
+    <div class="wjb-inner">
 
         <?php if ( $atts['show_hero'] !== 'no' && $atts['show_hero'] !== '0' ) : ?>
         <!-- Hero -->
@@ -318,6 +319,7 @@ function wjb_render_shortcode( $atts ) {
         </nav>
         <?php endif; ?>
 
+    </div><!-- .wjb-inner -->
     </div><!-- .wjb-wrap -->
 
     <!-- Modal -->
