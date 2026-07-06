@@ -218,6 +218,57 @@ html { height: 100%; }
 .wjbp-field input::placeholder,
 .wjbp-field textarea::placeholder { color: var(--p-muted); }
 
+/* Autocomplete-style fields for sector/location */
+.wjbp-combo {
+    position: relative;
+    width: 100%;
+}
+.wjbp-combo-list {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: 240px;
+    overflow-y: auto;
+    padding: 6px;
+    background: var(--p-surface);
+    border: 1px solid var(--p-border-hi);
+    border-radius: var(--p-radius-sm);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+.wjbp-combo-list.is-open { display: block; }
+.wjbp-combo-option {
+    display: block;
+    width: 100%;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--p-text);
+    font-family: var(--p-font);
+    font-size: 14px;
+    line-height: 1.3;
+    text-align: left;
+    cursor: pointer;
+}
+.wjbp-combo-option:hover,
+.wjbp-combo-option.is-active {
+    background: var(--p-purple-dim);
+    color: #fff;
+}
+.wjbp-combo-option--custom {
+    color: var(--p-sub);
+    border-top: 1px solid var(--p-border);
+    margin-top: 4px;
+    padding-top: 10px;
+}
+.wjbp-combo-option--custom strong {
+    color: var(--p-purple-hi);
+    font-weight: 700;
+}
+
 .wjbp-req { color: var(--p-purple); }
 
 .wjbp-hint {

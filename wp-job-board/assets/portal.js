@@ -26,6 +26,130 @@
         updateStatEl('wjbp-stat-month',  stats.month);
     }
 
+    // ── Sector / location combo fields ───────────────────────────────────
+    var comboValues = {
+        sector: getUniqueRowValues('sector'),
+        location: getUniqueRowValues('location')
+    };
+
+    function getUniqueRowValues(key) {
+        var seen = {};
+        var values = [];
+        document.querySelectorAll('.wjbp-row').forEach(function (row) {
+            var val = (row.dataset[key] || '').trim();
+            var id = val.toLowerCase();
+            if (!val || seen[id]) return;
+            seen[id] = true;
+            values.push(val);
+        });
+        return values.sort(function (a, b) { return a.localeCompare(b); });
+    }
+
+    function addComboValue(key, value) {
+        value = (value || '').trim();
+        if (!value || !comboValues[key]) return;
+        var exists = comboValues[key].some(function (item) {
+            return item.toLowerCase() === value.toLowerCase();
+        });
+        if (!exists) {
+            comboValues[key].push(value);
+            comboValues[key].sort(function (a, b) { return a.localeCompare(b); });
+        }
+    }
+
+    function initComboField(inputId, key) {
+        var input = document.getElementById(inputId);
+        if (!input) return;
+
+        var wrap = document.createElement('div');
+        wrap.className = 'wjbp-combo';
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+
+        var list = document.createElement('div');
+        list.className = 'wjbp-combo-list';
+        list.setAttribute('role', 'listbox');
+        wrap.appendChild(list);
+
+        var activeIndex = -1;
+        var items = [];
+
+        function close() {
+            list.classList.remove('is-open');
+            activeIndex = -1;
+        }
+
+        function choose(value) {
+            input.value = value;
+            close();
+            input.focus();
+        }
+
+        function render() {
+            var q = input.value.trim().toLowerCase();
+            var exact = false;
+            items = comboValues[key].filter(function (value) {
+                if (value.toLowerCase() === q) exact = true;
+                return !q || value.toLowerCase().indexOf(q) !== -1;
+            }).slice(0, 8);
+
+            list.innerHTML = '';
+            items.forEach(function (value, i) {
+                var option = document.createElement('button');
+                option.type = 'button';
+                option.className = 'wjbp-combo-option' + (i === activeIndex ? ' is-active' : '');
+                option.setAttribute('role', 'option');
+                option.textContent = value;
+                option.addEventListener('mousedown', function (e) {
+                    e.preventDefault();
+                    choose(value);
+                });
+                list.appendChild(option);
+            });
+
+            if (q && !exact) {
+                var custom = document.createElement('button');
+                custom.type = 'button';
+                custom.className = 'wjbp-combo-option wjbp-combo-option--custom' + (activeIndex === items.length ? ' is-active' : '');
+                custom.innerHTML = 'Use <strong>“' + esc(input.value.trim()) + '”</strong>';
+                custom.addEventListener('mousedown', function (e) {
+                    e.preventDefault();
+                    choose(input.value.trim());
+                });
+                list.appendChild(custom);
+                items.push(input.value.trim());
+            }
+
+            list.classList.toggle('is-open', list.children.length > 0 && document.activeElement === input);
+        }
+
+        input.addEventListener('focus', render);
+        input.addEventListener('input', function () { activeIndex = -1; render(); });
+        input.addEventListener('blur', function () { setTimeout(close, 120); });
+        input.addEventListener('keydown', function (e) {
+            if (!list.classList.contains('is-open') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) render();
+            if (!items.length) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                activeIndex = Math.min(activeIndex + 1, items.length - 1);
+                render();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                activeIndex = Math.max(activeIndex - 1, 0);
+                render();
+            } else if (e.key === 'Enter' && activeIndex >= 0) {
+                e.preventDefault();
+                choose(items[activeIndex]);
+            } else if (e.key === 'Escape') {
+                close();
+            }
+        });
+    }
+
+    initComboField('wjbp-f-sector', 'sector');
+    initComboField('wjbp-f-location', 'location');
+
     // ── Toast ─────────────────────────────────────────────────────────────
     var toastEl    = document.getElementById('wjbp-toast');
     var toastTimer = null;
@@ -187,6 +311,8 @@
                     row.dataset.type        = job.type;
                     row.dataset.apply       = job.apply;
                     row.dataset.active      = job.active;
+                    addComboValue('sector', job.sector);
+                    addComboValue('location', job.location);
 
                     row.querySelector('.wjbp-td-title').textContent = job.title;
                     row.querySelector('.wjbp-td-meta:nth-child(2)') && (row.querySelector('.wjbp-td-meta:nth-child(2)').textContent = job.sector || '—');

@@ -1,6 +1,41 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+function wjb_portal_get_stats() {
+    global $wpdb;
+
+    $active = (int) $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(DISTINCT p.ID)
+         FROM {$wpdb->posts} p
+         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = %s AND pm.meta_value = %s
+         WHERE p.post_type = %s AND p.post_status = %s",
+        '_wjb_active', '1', 'job_listing', 'publish'
+    ) );
+
+    $hidden = (int) $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(DISTINCT p.ID)
+         FROM {$wpdb->posts} p
+         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = %s AND pm.meta_value = %s
+         WHERE p.post_type = %s AND p.post_status = %s",
+        '_wjb_active', '0', 'job_listing', 'publish'
+    ) );
+
+    $month_start = gmdate( 'Y-m-01 00:00:00' );
+    $added_month = (int) $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(ID)
+         FROM {$wpdb->posts}
+         WHERE post_type = %s AND post_status = %s AND post_date_gmt >= %s",
+        'job_listing', 'publish', $month_start
+    ) );
+
+    return array(
+        'active'      => $active,
+        'hidden'      => $hidden,
+        'total'       => $active + $hidden,
+        'added_month' => $added_month,
+    );
+}
+
 function wjb_portal_render_page() {
     // ── Handle login POST ────────────────────────────────────────────────
     $login_error = '';
@@ -28,7 +63,7 @@ function wjb_portal_render_page() {
     $logout_url = '';
 
     if ( $is_auth ) {
-        $stats = wjb_get_stats();
+        $stats = wjb_portal_get_stats();
         $jobs  = get_posts( [
             'post_type'              => 'job_listing',
             'post_status'            => 'publish',
@@ -62,7 +97,7 @@ function wjb_portal_render_page() {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="<?php echo esc_url( WJB_URL . 'assets/portal.css' ); ?>?v=1.1.0">
+<link rel="stylesheet" href="<?php echo esc_url( WJB_URL . 'assets/portal.css' ); ?>?v=1.1.1">
 </head>
 <body class="wjbp-body">
 
@@ -370,7 +405,7 @@ var WJB_PORTAL = <?php echo wp_json_encode( [
 ] ); ?>;
 </script>
 <?php if ( $is_auth ) : ?>
-<script src="<?php echo esc_url( WJB_URL . 'assets/portal.js' ); ?>?v=1.1.0"></script>
+<script src="<?php echo esc_url( WJB_URL . 'assets/portal.js' ); ?>?v=1.1.1"></script>
 <?php endif; ?>
 </body>
 </html>
