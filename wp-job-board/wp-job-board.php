@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Job Board
- * Description: A custom job board with admin management and shortcode output. Use [job_board] on any page.
+ * Description: A custom job board powered by a standalone portal and shortcode output. Use [job_board] on any page.
  * Version: 1.1.0
  * Author: Your Agency
  * Text Domain: wp-job-board
@@ -16,7 +16,6 @@ require_once WJB_PATH . 'includes/post-type.php';
 require_once WJB_PATH . 'includes/meta-boxes.php';
 require_once WJB_PATH . 'includes/shortcode.php';
 require_once WJB_PATH . 'includes/enqueue.php';
-require_once WJB_PATH . 'includes/admin-dashboard.php';
 
 // Client portal — must load before template_redirect fires
 require_once WJB_PATH . 'includes/portal-settings.php';

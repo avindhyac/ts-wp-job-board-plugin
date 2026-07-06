@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A standalone WordPress plugin (`wp-job-board`) that adds a `job_listing` custom post type, a front-end job board via shortcode, and a custom admin dashboard. No build step — pure PHP, vanilla JS, and CSS.
+A standalone WordPress plugin (`wp-job-board`) that adds a hidden `job_listing` custom post type, a front-end job board via shortcode, and a standalone client portal. No build step — pure PHP, vanilla JS, and CSS.
 
 ## Installation / Development
 
@@ -23,11 +23,10 @@ To test changes:
 
 | File | Responsibility |
 |------|----------------|
-| `post-type.php` | Registers `job_listing` CPT (private, no public archive/rewrite) |
+| `post-type.php` | Registers `job_listing` CPT (private, hidden from wp-admin nav, no public archive/rewrite) |
 | `meta-boxes.php` | Job Details meta box, save handler, and custom admin list columns |
 | `shortcode.php` | `[job_board]` shortcode — queries, HTML output, modal markup |
 | `enqueue.php` | Registers Archivo font from Google Fonts + `assets/job-board.css` + `assets/job-board.js` on every front-end page |
-| `admin-dashboard.php` | Dashboard submenu page with stat cards, sector bar chart, type/level breakdowns, and recent listings table; CSS is injected inline via `wp_add_inline_style` |
 
 ### Post meta keys
 All stored under the `job_listing` post type:

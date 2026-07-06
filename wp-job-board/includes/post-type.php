@@ -20,7 +20,7 @@ function wjb_register_post_type() {
         'labels'             => $labels,
         'public'             => false,
         'show_ui'            => true,
-        'show_in_menu'       => true,
+        'show_in_menu'       => false,
         'menu_position'      => 20,
         'menu_icon'          => 'dashicons-id-alt',
         'supports'           => array( 'title', 'editor' ),
